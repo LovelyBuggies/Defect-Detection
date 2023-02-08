@@ -1,4 +1,4 @@
-# CodeXGLUE -- Defect Detection
+# Defect Detection
 
 ## Task Definition
 

@@ -8,6 +8,16 @@ Given a source code function, the task is to identify whether it is an insecure 
 
 The dataset we use comes from the paper [*Devign*: Effective Vulnerability Identification by Learning Comprehensive Program Semantics via Graph Neural Networks](http://papers.nips.cc/paper/9209-devign-effective-vulnerability-identification-by-learning-comprehensive-program-semantics-via-graph-neural-networks.pdf). We combine all projects and split 80%/10%/10% for training/dev/test.
 
+### Data Format
+
+After preprocessing dataset, you can obtain three .jsonl files, i.e. train.jsonl, valid.jsonl, test.jsonl
+
+For each file, each line in the uncompressed file represents one function.  One row is illustrated below.
+
+   - **func:** the source code
+   - **target:** 0 or 1 (vulnerability or not)
+   - **idx:** the index of example
+
 ### Download and Preprocess
 
 1. **Local:** Download dataset from [website](https://drive.google.com/file/d/1x6hoF7G-tSYxg8AFybggypLZgMGDNHfF/view?usp=sharing) to "dataset" folder or run the following command.
@@ -24,20 +34,9 @@ cd ..
 
 ```shell
 git clone https://github.com/LovelyBuggies/Defect-Detection.git
-pip3 install transformers 
-cd Defect-Detection/dataset 
-python3 preprocess.py
+pip3 install transformers
+cd Defect-Detection/
 ```
-
-### Data Format
-
-After preprocessing dataset, you can obtain three .jsonl files, i.e. train.jsonl, valid.jsonl, test.jsonl
-
-For each file, each line in the uncompressed file represents one function.  One row is illustrated below.
-
-   - **func:** the source code
-   - **target:** 0 or 1 (vulnerability or not)
-   - **idx:** the index of example
 
 ### Data Statistics
 
@@ -49,29 +48,6 @@ Data statistics of the dataset are shown in the below table:
 | Dev   |   2,732   |
 | Test  |   2,732   |
 
-## Evaluator
-
-We provide a script to evaluate predictions for this task, and report accuracy score.
-
-### Example
-
-```shell
-python evaluator/evaluator.py -a evaluator/test.jsonl -p evaluator/predictions.txt
-```
-
-{'Acc': 0.6}
-
-### Input predictions
-
-A predications file that has predictions in TXT format, such as evaluator/predictions.txt. For example:
-
-```shell
-0	0
-1	1
-2	1
-3	0
-4	0
-```
 
 ## Pipeline-CodeBERT
 
@@ -131,7 +107,7 @@ python run.py \
 python ../evaluator/evaluator.py -a ../dataset/test.jsonl -p saved_models/predictions.txt
 ```
 
-{'Acc': 0.6207906295754027}
+{'Acc': 0.6325106295754027}
 
 ## Result
 
@@ -142,4 +118,4 @@ The results on the test set are shown as below:
 | BiLSTM                                           |   59.37   |
 | TextCNN                                          |   60.69   |
 | [RoBERTa](https://arxiv.org/pdf/1907.11692.pdf)  |   61.05   |
-| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) | **62.08** |
+| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) | **63.25** |

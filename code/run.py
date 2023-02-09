@@ -30,7 +30,6 @@ from tqdm import tqdm, trange
 import multiprocessing
 from model import Model
 
-cpu_cont = multiprocessing.cpu_count()
 from transformers import (
     WEIGHTS_NAME,
     AdamW,

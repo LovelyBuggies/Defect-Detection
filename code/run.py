@@ -117,7 +117,7 @@ class TextDataset(Dataset):
         )
 
 
-def set_seed(seed=42):
+def set_seed(seed=2023):
     random.seed(seed)
     os.environ["PYHTONHASHSEED"] = str(seed)
     np.random.seed(seed)

@@ -21,7 +21,7 @@ class Model(nn.Module):
         logits = outputs
         prob = torch.sigmoid(logits)
         if prob.shape[1] != 1:
-            prob = torch.mean(prob, axis=[1, 2])
+            prob = torch.mean(prob, axis=0)
         print(prob.shape)
         if labels is not None:
             labels = labels.float()

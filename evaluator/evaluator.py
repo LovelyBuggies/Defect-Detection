@@ -28,14 +28,29 @@ def read_predictions(filename):
 
 def calculate_scores(answers, predictions):
     Acc = []
+    TP, TN, FN, FP = 0, 0, 0, 0
     for key in answers:
         if key not in predictions:
             logging.error("Missing prediction for index {}.".format(key))
             sys.exit()
         Acc.append(answers[key] == predictions[key])
+        if answers[key] == predictions[key] == 1:
+            TP += 1
+        elif answers[key] == predictions[key] == 0:
+            TN += 1
+        elif (answers[key] == 1) and (predictions[key] == 0):
+            FN += 1
+        else:
+            FP += 1
 
     scores = {}
     scores["Acc"] = np.mean(Acc)
+    scores["Recall"] = TP / (TP + FN)
+    scores["Precision"] = TP / (TP + FP)
+    scores["F1"] = 2 * (
+        (scores["Precision"] * scores["Recall"])
+        / (scores["Precision"] + scores["Recall"])
+    )
     return scores
 
 

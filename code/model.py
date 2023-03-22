@@ -20,7 +20,9 @@ class Model(nn.Module):
         outputs = self.encoder(input_ids, attention_mask=input_ids.ne(1))[0]
         logits = outputs
         prob = torch.sigmoid(logits)
-        print(prob, outputs)
+        if len(prob) != len(labels):
+            prob = torch.mean(prob, axis=0)
+        print(prob.shape)
         if labels is not None:
             labels = labels.float()
             loss = torch.log(prob[:, 0] + 1e-10) * labels + torch.log(

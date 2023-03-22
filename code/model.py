@@ -20,7 +20,7 @@ class Model(nn.Module):
         outputs = self.encoder(input_ids, attention_mask=input_ids.ne(1))[0]
         logits = outputs
         prob = torch.sigmoid(logits)
-        if len(prob) != len(labels):
+        if prob.shape[1] != 1:
             prob = torch.mean(prob, axis=0)
         print(prob.shape)
         if labels is not None:
